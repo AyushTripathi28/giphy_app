@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:giphyapp/views/homepage.dart';
+import 'package:giphyapp/providers/giphy_provider.dart';
+import 'package:giphyapp/providers/theme_provider.dart';
+import 'package:giphyapp/root_app.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,18 +13,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'App',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
-            .copyWith(background: Colors.white),
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(
+        create: (context) => GiphyProvider(),
       ),
-      themeMode: ThemeMode.light,
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blue)
-            .copyWith(background: Colors.black),
-      ),
-      home: const HomePage(),
-    );
+      ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+      )
+    ], child: const RootApp());
   }
 }
